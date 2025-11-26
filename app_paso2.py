@@ -24,21 +24,28 @@ IMG_SIZE = (128, 128)
 # ---------------------------------------
 # 2. PREPROCESAR IMAGEN
 # ---------------------------------------
+from PIL import Image
+
 def preprocesar_imagen(image_path):
     try:
-        image = cv2.imread(image_path)
+        # Leer imagen de modo universal
+        image = Image.open(image_path).convert("RGB")
 
-        if image is None:
-            return None
+        # Redimensionar exactamente como el modelo
+        image = image.resize((128, 128))
 
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        image = cv2.resize(image, IMG_SIZE)
-        image = image.astype("float32") / 255.0
-        image = np.expand_dims(image, axis=0)
+        # Convertir a array normalizado
+        img_array = np.array(image).astype("float32") / 255.0
 
-        return image
-    except:
+        # Expandir dimensiones: (1, 128, 128, 3)
+        img_array = np.expand_dims(img_array, axis=0)
+
+        return img_array
+
+    except Exception as e:
+        print("Error preprocesando imagen:", str(e))
         return None
+
 
 # ---------------------------------------
 # 3. CLASIFICACIÓN MULTICLASE
