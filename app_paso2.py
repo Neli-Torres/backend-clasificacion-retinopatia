@@ -50,7 +50,8 @@ def preprocesar_imagen(image_path):
 # ---------------------------------------
 # 3. CLASIFICACIÓN MULTICLASE
 # ---------------------------------------
-CLASSES = ["No_DR", "Mild", "Moderate", "Severe", "Proliferative"]
+CLASSES = ["Mild", "Moderate", "No_DR", "Proliferate_DR", "Severe"]
+#CLASSES = ["No_DR", "Mild", "Moderate", "Severe", "Proliferative"]
 
 def clasificar_imagen(image_path):
     img = preprocesar_imagen(image_path)
